@@ -1,0 +1,205 @@
+proj ISP
+
+interface Ethernet0/6
+!
+interface Ethernet0/7
+!
+interface Vlan1
+ nameif inside
+ security-level 100
+ ip address 172.16.1.1 255.255.255.0
+!
+interface Vlan2
+ nameif outside
+ security-level 0
+ ip address dhcp
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+telnet timeout 5
+ssh timeout 5
+!
+dhcpd auto_config outside
+!
+dhcpd enable inside
+!
+!
+!
+!
+!
+ciscoasa(config-if)#
+ciscoasa(config-if)#
+ciscoasa(config-if)#
+ciscoasa(config-if)#
+ciscoasa(config-if)#
+ciscoasa(config-if)#
+ciscoasa(config-if)#
+ciscoasa(config-if)#
+ciscoasa(config-if)#^Z
+ciscoasa#
+%SYS-5-CONFIG_I: Configured from console by console
+
+ciscoasa#int e0/1
+         ^
+% Invalid input detected at '^' marker.
+	
+ciscoasa#switchport
+ciscoasa#switchport acc
+ciscoasa#int e0/1
+         ^
+% Invalid input detected at '^' marker.
+	
+ciscoasa#conf t
+ciscoasa(config)#int e0/1
+ciscoasa(config-if)#switcj
+ciscoasa(config-if)#switch
+ciscoasa(config-if)#switchport acc
+ciscoasa(config-if)#switchport access vlan 
+ciscoasa(config-if)#switchport access vlan 1
+ciscoasa(config-if)#exit
+ciscoasa(config)#int vlan 2
+ciscoasa(config-if)#ip address 203.1.1.2 255.255.255.0
+ciscoasa(config-if)#no shj
+ciscoasa(config-if)#no sh
+ciscoasa(config-if)#no shutdown 
+ciscoasa(config-if)#nameif outs
+ciscoasa(config-if)#nameif outside
+ciscoasa(config-if)#sec
+ciscoasa(config-if)#security-level 0
+ciscoasa(config-if)#exit
+ciscoasa(config)#int e0/0
+ciscoasa(config-if)#switc
+ciscoasa(config-if)#switchport acc
+ciscoasa(config-if)#switchport access vlan 2
+ciscoasa(config-if)#dhcp
+ciscoasa(config-if)#exit
+ciscoasa(config)#dhcd address 172.16.1.5-172.16.1.6 in
+ciscoasa(config)#dhcd address 172.16.1.5-172.16.1.6 inside
+                    ^
+% Invalid input detected at '^' marker.
+	
+ciscoasa(config)#dhcpd address 172.16.1.5-172.16.1.6 inside
+ciscoasa(config)#dhcpd dns 8.8.8.8
+ciscoasa(config)#dhcpd dns 8.8.8.8?
+% Unrecognized command
+ciscoasa(config)#dhcpd dns 8.8.8.8 inter
+ciscoasa(config)#dhcpd dns 8.8.8.8 interface inside
+ciscoasa(config)#end
+ciscoasa#sh run 
+: Saved
+:
+ASA Version 8.4(2)
+!
+hostname ciscoasa
+names
+!
+interface Ethernet0/0
+ switchport access vlan 2
+!
+interface Ethernet0/1
+!
+interface Ethernet0/2
+!
+interface Ethernet0/3
+!
+interface Ethernet0/4
+!
+interface Ethernet0/5
+!
+interface Ethernet0/6
+!
+interface Ethernet0/7
+!
+interface Vlan1
+ nameif inside
+ security-level 100
+ ip address 172.16.1.1 255.255.255.0
+!
+interface Vlan2
+ nameif outside
+ security-level 0
+ ip address 203.1.1.2 255.255.255.0
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+telnet timeout 5
+ssh timeout 5
+!
+dhcpd dns 8.8.8.8
+dhcpd auto_config outside
+!
+dhcpd address 172.16.1.5-172.16.1.6 inside
+dhcpd dns 8.8.8.8 interface inside
+dhcpd enable inside
+!
+!
+!
+!
+!
+ciscoasa#
+ciscoasa#
+ciscoasa#
+ciscoasa#
+ciscoasa#
+ciscoasa#conf t
+ciscoasa(config)#route outside 0.0.0.0 0.0.0.0 203.1.1.1
+ciscoasa(config)#
+ciscoasa(config)#
+ciscoasa(config)#obj
+ciscoasa(config)#object
+ciscoasa(config)#object ne
+ciscoasa(config)#object network LAN
+ciscoasa(config-network-object)#sub
+ciscoasa(config-network-object)#subnet 172.16.1.0
+ciscoasa(config-network-object)#subnet 172.16.1.0 255.255.255.0
+ciscoasa(config-network-object)#nat
+ciscoasa(config-network-object)#nat i
+ciscoasa(config-network-object)#nat (in
+ciscoasa(config-network-object)#nat (inside,ou
+ciscoasa(config-network-object)#nat (inside,outsi
+ciscoasa(config-network-object)#nat (inside,outside) dynamic 
+ciscoasa(config-network-object)#nat (inside,outside) dynamic interface 
+ciscoasa(config-network-object)#exit
+ciscoasa#conf t
+ciscoasa(config)#acces
+ciscoasa(config)#access
+ciscoasa(config)#access-li
+ciscoasa(config)#access-list ?
+
+configure mode commands/options:
+  WORD  Access list identifier
+ciscoasa(config)#access-list in_to_internet ex
+ciscoasa(config)#access-list in_to_internet extended perm
+ciscoasa(config)#access-list in_to_internet extended permit tcp 
+ciscoasa(config)#access-list in_to_internet extended permit tcp any
+ciscoasa(config)#access-list in_to_internet extended permit tcp any any
+ciscoasa(config)#access-list in_to_internet extended permit icmp any
+ciscoasa(config)#access-list in_to_internet extended permit icmp any an
+ciscoasa(config)#access-list in_to_internet extended permit icmp any any 
+ciscoasa(config)#acc
+ciscoasa(config)#access-gr
+ciscoasa(config)#access-group in_to_internet in inter
+ciscoasa(config)#access-group in_to_internet in interface outside
+ciscoasa(config)#show xlate
+1 in use, 1 most used
+Flags: D - DNS, e - extended, I - identity, i - dynamic, r - portmap, s - static, T - twice, N - net-to-net
+ICMP PAT from inside:172.16.1.5/2 to outside:203.1.1.2/19455 flags i idle 00:00:26,  timeout 0:00:30
+
+ciscoasa(config)#show nat
+Auto NAT Policies (Section 2)
+1 (inside) to (outside) source dynamic LAN interface
+    translate_hits = 197, untranslate_hits = 196
