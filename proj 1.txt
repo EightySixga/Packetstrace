@@ -1,0 +1,203 @@
+source code 1
+
+ASA-5505(config)#class-map inspectu
+ASA-5505(config)#class-map inspection
+ASA-5505(config)#class-map inspection_default
+ASA-5505(config-cmap)#mat
+ASA-5505(config-cmap)#match de
+ASA-5505(config-cmap)#match default-inspection-traffic 
+ASA-5505(config-cmap)#exit
+ASA-5505(config)#po
+ASA-5505(config)#policy-map glo
+ASA-5505(config)#policy-map glonn
+ASA-5505(config)#policy-map global_policy
+ASA-5505(config-pmap)#clas
+ASA-5505(config-pmap)#class ins
+ASA-5505(config-pmap)#class inspection_defaulr
+ERROR: % class map inspection_defaulr not configured
+ASA-5505(config-pmap)#class inspection_default
+ASA-5505(config-pmap-c)#ins
+ASA-5505(config-pmap-c)#inspect ic
+ASA-5505(config-pmap-c)#inspect icmp 
+ASA-5505(config-pmap-c)#exit
+ASA-5505(config)#ser
+ASA-5505(config)#service-policy 
+% Incomplete command.
+ASA-5505(config)#service-policy glo
+ASA-5505(config)#service-policy global_olicy?
+WORD  
+ASA-5505(config)#service-policy global_policy?
+WORD  
+ASA-5505(config)#service-policy global_policy global
+ASA-5505(config)#dhcp add
+ASA-5505(config)#dhcp address 192.168.1.5-192.168.1.36 inside
+ASA-5505(config)#dhcp ena
+ASA-5505(config)#dhcp enable ins
+ASA-5505(config)#dhcp enable inside 
+ASA-5505(config)#usern
+ASA-5505(config)#username admin1 pas
+ASA-5505(config)#username admin1 password cisco
+ASA-5505(config)#a
+ASA-5505(config)#aaa
+ASA-5505(config)#aaa autge
+ASA-5505(config)#aaa autg
+ASA-5505(config)#aaa auth
+ASA-5505(config)#aaa authentication ssh cons
+ASA-5505(config)#aaa authentication ssh console LOC
+ASA-5505(config)#aaa authentication ssh console LOCAL 
+ASA-5505(config)#crypto key g
+ASA-5505(config)#crypto key generate rs
+ASA-5505(config)#crypto key generate rsa mo
+ASA-5505(config)#crypto key generate rsa modulus 102
+ASA-5505(config)#crypto key generate rsa modulus 1024 
+WARNING: You have a RSA keypair already defined named <Default-RSA-Key>.
+
+Do you really want to replace them? [yes/no]: no
+ERROR: Failed to create new RSA keys named <Default-RSA-Key>
+ASA-5505(config)#ssh 192.168.1.0 255.255.255.0 inside
+ASA-5505(config)#ssh 172.16.3.3 255.255.255.255 out
+ASA-5505(config)#ssh 172.16.3.3 255.255.255.255 outside 
+ASA-5505(config)#ssh timeout 
+ASA-5505(config)#ssh timeout 10
+ASA-5505(config)#vlan
+ASA-5505(config)#int vlan 
+ASA-5505(config)#int vlan 3
+ASA-5505(config-if)#ip add
+ASA-5505(config-if)#ip address 192.168.2.1 255.255.255.0
+ASA-5505(config-if)#no for
+ASA-5505(config-if)#no forward ing
+ASA-5505(config-if)#no forward inr
+ASA-5505(config-if)#no forward int
+ASA-5505(config-if)#no forward interface vl
+ASA-5505(config-if)#no forward interface vlan 1
+ASA-5505(config-if)#nameif dmz
+INFO: Security level for "dmz" set to 0 by default.
+ASA-5505(config-if)#sec
+ASA-5505(config-if)#security-level 70
+ASA-5505(config-if)#int e0/2
+ASA-5505(config-if)#swi
+ASA-5505(config-if)#switchport acc
+ASA-5505(config-if)#switchport access vla
+ASA-5505(config-if)#switchport access vlan 3
+ASA-5505(config-if)#show inter
+ASA-5505(config-if)#show inter
+ASA-5505(config-if)#show interf
+ASA-5505(config-if)#show interface ip
+ASA-5505(config-if)#show interface ip 
+ASA-5505(config-if)#show interface ip bri
+ASA-5505(config-if)#show interface ip brief
+Interface              IP-Address      OK? Method Status                Protocol
+ 
+Ethernet0/0            unassigned      YES unset  up                    up
+ 
+Ethernet0/1            unassigned      YES unset  up                    up
+ 
+Ethernet0/2            unassigned      YES unset  up                    up
+ 
+Ethernet0/3            unassigned      YES unset  down                  down
+ 
+Ethernet0/4            unassigned      YES unset  down                  down
+ 
+Ethernet0/5            unassigned      YES unset  down                  down
+ 
+Ethernet0/6            unassigned      YES unset  down                  down
+ 
+Ethernet0/7            unassigned      YES unset  down                  down
+ 
+Vlan1                  192.168.1.1     YES manual up                    up
+ 
+Vlan2                  209.165.200.226 YES manual up                    up
+ 
+
+ASA-5505(config-if)#show ip address
+System IP Addresses:
+Interface             Name                 IP address      Subnet mask     Method
+Vlan1                 inside               192.168.1.1     255.255.255.0   manual
+Vlan2                 Outside              209.165.200.226 255.255.255.248 manual
+Vlan3                 dmz                  192.168.2.1     255.255.255.0   manual
+
+Current IP Addresses:
+Interface             Name                 IP address      Subnet mask     Method
+Vlan1                 inside               192.168.1.1     255.255.255.0   manual
+Vlan2                 Outside              209.165.200.226 255.255.255.248 manual
+Vlan3                 dmz                  192.168.2.1     255.255.255.0   manual
+
+ASA-5505(config-if)#show vlan
+Use "show switch vlan" to view the vlans that have been assigned to Layer 2 switch ports.
+ASA-5505(config-if)#s
+ASA-5505(config-if)#show sw
+ASA-5505(config-if)#show switch vlan
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    inside                           up        Et0/1, Et0/3, Et0/4, Et0/5
+                                                Et0/6, Et0/7
+2    Outside                          up        Et0/0
+3    dmz                              up        Et0/2
+ASA-5505(config-if)#exit
+ASA-5505(config)#object network dmz-svr
+ASA-5505(config-network-object)#host 102.168.2.3
+ASA-5505(config-network-object)#nat (dmz,outside) st
+ASA-5505(config-network-object)#nat (dmz,outside) static 209.165.200.227
+ASA-5505(config-network-object)#exit
+ASA-5505#conf t
+ASA-5505(config)#acce
+ASA-5505(config)#access
+ASA-5505(config)#access-
+ASA-5505(config)#access-li
+ASA-5505(config)#access-list out
+ASA-5505(config)#access-list outside-dmz per
+ASA-5505(config)#access-list outside-dmz permit ic
+ASA-5505(config)#access-list outside-dmz permit icmp
+ASA-5505(config)#access-list outside-dmz permit icmp any host 192.168.2.3
+ASA-5505(config)#access-li
+ASA-5505(config)#access-list outside-dmz per
+ASA-5505(config)#access-list outside-dmz permit tcp
+ASA-5505(config)#access-list outside-dmz permit tcp an
+ASA-5505(config)#access-list outside-dmz permit tcp any host 192.168.2.3
+ASA-5505(config)#acce
+ASA-5505(config)#access-group
+ASA-5505(config)#access-group out
+ASA-5505(config)#access-group outside-dmz per
+ASA-5505(config)#access-group outside-dmz in inte
+ASA-5505(config)#access-group outside-dmz in interface outside
+ASA-5505(config)#show nat
+Auto NAT Policies (Section 2)
+1 (inside) to (Outside) source dynamic INSIDE-NET interface
+    translate_hits = 4, untranslate_hits = 3
+2 (dmz) to (Outside) source static dmz-svr 209.165.200.227
+    translate_hits = 0, untranslate_hits = 0
+
+ASA-5505(config)#show interface
+Ethernet0/0 "", is up, line protocol is up (connected)
+  Hardware is 88E6095, BW 100 Mbps, DLY 100 usec
+        Auto-Duplex, Auto-Speed
+        Input flow control is unsupported, output flow control is unsupported
+        Available but not configured via nameif
+        MAC address 0060.473C.6801, MTU not set
+        IP address unassigned
+        0 packets input, 0 bytes, 0 no buffer
+        Received 0 broadcasts, 0 runts, 0 giants
+        0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored, 0 abort
+        0 pause input, 0 resume input
+        0 L2 decode drops
+        0 switch ingress policy drops
+        0 packets output, 0 bytes, 0 underruns
+        0 pause output, 0 resume output
+        0 output errors, 0 collisions, 0 interface resets
+        0 late collisions, 0 deferred
+        0 rate limit drops
+        0 switch egress policy drops
+        0 input reset drops, 0 output reset drops
+Ethernet0/1 "", is up, line protocol is up (connected)
+  Hardware is 88E6095, BW 100 Mbps, DLY 100 usec
+        Auto-Duplex, Auto-Speed
+        Input flow control is unsupported, output flow control is unsupported
+        Available but not configured via nameif
+        MAC address 0060.473C.6802, MTU not set
+
+ASA-5505(config)#
+ASA-5505#
+%SYS-5-CONFIG_I: Configured from console by console
+
+ASA-5505#
