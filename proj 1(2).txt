@@ -1,0 +1,103 @@
+proj 1
+
+
+ASA-5505>en
+Password: 
+Invalid password
+Password: 
+ASA-5505#conf t
+ASA-5505(config)#show run
+ASA-5505(config)#show run
+: Saved
+:
+ASA Version 8.4(2)
+!
+hostname ASA-5505
+domain-name academy.com
+enable password 4IncP7vTjpaba2aF encrypted
+names
+!
+interface Ethernet0/0
+ switchport access vlan 2
+!
+interface Ethernet0/1
+!
+interface Ethernet0/2
+ switchport access vlan 3
+!
+interface Ethernet0/3
+!
+interface Ethernet0/4
+!
+interface Ethernet0/5
+!
+interface Ethernet0/6
+!
+interface Ethernet0/7
+!
+interface Vlan1
+ nameif inside
+ security-level 100
+ ip address 192.168.1.1 255.255.255.0
+!
+interface Vlan2
+ nameif Outside
+ security-level 0
+ ip address 209.165.200.226 255.255.255.248
+!
+interface Vlan3
+ no forward interface Vlan1
+ nameif dmz
+ security-level 70
+ ip address 192.168.2.1 255.255.255.0
+!
+object network INSIDE-NET
+ subnet 192.168.1.0 255.255.255.0
+ nat (inside,Outside) dynamic interface
+object network dmz-svr
+ host 102.168.2.3
+ nat (dmz,Outside) static 209.165.200.227
+!
+route Outside 0.0.0.0 0.0.0.0 209.165.200.225 1
+!
+access-list outside-dmz extended permit icmp any host 192.168.2.3
+access-list outside-dmz extended permit tcp any host 192.168.2.3
+!
+!
+access-group outside-dmz in interface Outside
+aaa authentication ssh console LOCAL
+!
+username admin1 password 4IncP7vTjpaba2aF encrypted
+!
+class-map inspection_default
+ match default-inspection-traffic
+!
+policy-map global_policy
+ class inspection_default
+  inspect icmp 
+!
+service-policy global_policy global
+!
+telnet timeout 5
+ssh 192.168.1.0 255.255.255.0 inside
+ssh 172.16.3.3 255.255.255.255 Outside
+ssh timeout 10
+!
+dhcpd auto_config outside
+!
+!
+dhcpd address 192.168.1.5-192.168.1.36 inside
+dhcpd enable inside
+!
+!
+!
+!
+ASA-5505(config)#
+ASA-5505(config)#
+ASA-5505(config)#
+ASA-5505(config)#
+ASA-5505(config)#
+ASA-5505#
+%SYS-5-CONFIG_I: Configured from console by console
+
+ASA-5505#
