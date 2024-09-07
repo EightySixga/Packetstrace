@@ -1,0 +1,716 @@
+Cisco ASA
+
+hostname IDNEW-FWL01
+
+enable password 
+
+ip local pool vpn_address_pool 10.161.208.10-10.161.208.200 mask 255.255.255.0
+
+interface GigabitEthernet0/0
+ nameif Biznet-Outside
+ security-level 0
+ ip address 182.253.7.98 255.255.255.248
+
+interface GigabitEthernet0/1
+ nameif Internal-Inside
+ security-level 90
+ ip address 10.171.209.254 255.255.255.0
+
+interface GigabitEthernet0/2
+ description Internal LAN fro Archetype Residential
+ nameif Inside-Archetype
+ security-level 90
+ ip address 10.171.210.254 255.255.255.0
+
+interface GigabitEthernet0/3
+ shutdown
+ no nameif
+ no security-level
+ no ip address
+!
+interface GigabitEthernet0/4
+ shutdown
+ no nameif
+ no security-level
+ no ip address
+!
+interface GigabitEthernet0/5
+ shutdown
+ no nameif
+ no security-level
+ no ip address
+!
+interface Management0/0
+ management-only
+ nameif management
+ security-level 100
+ ip address 192.168.1.1 255.255.255.0
+
+
+regex facebook.com "\.facebook\.com"
+regex nontonmovie.com "\.nontonmovie\.com"
+regex bioskop25.com "\.bioskop25\.com"
+regex youtube.com "\.youtube\.com"
+
+time-range Working_Hours
+ periodic weekdays 8:00 to 17:59
+
+
+boot system disk0:/asa952-2-smp-k8.bin
+boot system disk0:/asa924-smp-k8.bin
+boot system disk0:/asa923-smp-k8.bin
+ftp mode passive
+dns domain-lookup Internal-Inside
+dns server-group DefaultDNS
+ name-server 10.161.209.9
+ name-server 8.8.8.8
+ domain-name apac.local
+same-security-traffic permit intra-interface
+object network FileShare
+ host 10.161.209.30
+ description id.fileshare.archetype-group.com
+object network VPN_Pool
+ subnet 10.161.208.0 255.255.255.0
+object network Local_block_list
+ range 10.161.209.1 10.161.209.236
+object network obj-facebook.com
+ fqdn v4 www.facebook.com
+object network obj-youtube.com
+ fqdn v4 www.youtube.com
+object network FTP
+ host 10.161.209.21
+object network 182.253.7.101
+ host 182.253.7.101
+object network SFT_Asiapaints_Com_Public_IP
+ host 203.196.250.82
+object network Archetype-Nav-Server
+ host 183.91.31.172
+ description Archetype-Nav-Server
+object network Archetype_Nav_help_server
+ host 113.161.91.75
+ description Archetype_Nav_help_server
+object network mail.archetype-group.com
+ host 101.100.201.145
+ description Archetype mail
+object network ASA-Chennai
+ host 122.183.221.226
+ description Chennai ASA IP
+object network Sangfor
+ host 10.161.209.242
+ description Sangfor
+object network Imigration
+ fqdn v4 ipass.imigrasi.go.id
+ description Goverment website for Passport
+object network NETWORK_OBJ_10.161.208.0_24
+ subnet 10.161.208.0 255.255.255.0
+object-group service DM_INLINE_SERVICE_1
+ service-object tcp-udp destination eq 8443
+ service-object tcp-udp destination eq domain
+ service-object tcp destination eq 3389
+ service-object tcp destination eq 3443
+ service-object tcp destination eq 4434
+ service-object tcp destination eq 4443
+ service-object tcp destination eq 7778
+ service-object tcp destination eq 81
+ service-object tcp destination eq 8443
+ service-object tcp destination eq 889
+ service-object tcp destination eq 9091
+ service-object tcp destination eq 993
+ service-object tcp destination eq ftp
+ service-object tcp destination eq www
+ service-object tcp destination eq https
+ service-object tcp destination eq ssh
+ service-object udp destination eq ntp
+ service-object tcp destination eq ftp-data
+ service-object tcp-udp destination eq 8080
+ service-object tcp-udp destination eq 3101
+object-group network T-WAN_SPOKE_SP-ID-JA_30
+ network-object 10.161.208.0 255.255.252.0
+ network-object 10.161.204.0 255.255.252.0
+object-group network T-WAN_HUB_SP-ID-JA_30
+ network-object 10.161.0.0 255.255.252.0
+ network-object 10.161.4.0 255.255.252.0
+ network-object 10.161.8.0 255.255.252.0
+ network-object 10.161.12.0 255.255.252.0
+ network-object 10.161.16.0 255.255.252.0
+ network-object 10.161.20.0 255.255.252.0
+ network-object 10.161.24.0 255.255.252.0
+ network-object 10.161.28.0 255.255.252.0
+ network-object 10.161.32.0 255.255.255.0
+ network-object 10.161.33.0 255.255.255.0
+ network-object 10.161.40.0 255.255.252.0
+ network-object 10.161.44.0 255.255.252.0
+ network-object 10.161.48.0 255.255.252.0
+ network-object 10.161.52.0 255.255.252.0
+ network-object 10.161.56.0 255.255.252.0
+ network-object 10.161.60.0 255.255.252.0
+ network-object 10.161.64.0 255.255.252.0
+ network-object 10.161.68.0 255.255.252.0
+ network-object 10.161.72.0 255.255.252.0
+ network-object 10.161.76.0 255.255.252.0
+ network-object 10.161.84.0 255.255.252.0
+ network-object 10.161.88.0 255.255.252.0
+ network-object 10.161.92.0 255.255.252.0
+ network-object 10.161.96.0 255.255.252.0
+ network-object 10.161.100.0 255.255.252.0
+ network-object 10.161.104.0 255.255.252.0
+ network-object 10.161.116.0 255.255.252.0
+ network-object 10.161.120.0 255.255.252.0
+ network-object 10.161.124.0 255.255.252.0
+ network-object 10.161.128.0 255.255.252.0
+ network-object 10.161.132.0 255.255.252.0
+ network-object 10.161.136.0 255.255.252.0
+ network-object 10.161.140.0 255.255.252.0
+ network-object 10.161.144.0 255.255.252.0
+ network-object 10.161.148.0 255.255.252.0
+ network-object 10.161.152.0 255.255.252.0
+ network-object 10.161.156.0 255.255.252.0
+ network-object 10.161.160.0 255.255.252.0
+ network-object 10.161.164.0 255.255.252.0
+ network-object 10.161.168.0 255.255.252.0
+ network-object 10.161.172.0 255.255.252.0
+ network-object 10.161.176.0 255.255.252.0
+ network-object 10.161.180.0 255.255.252.0
+ network-object 10.161.184.0 255.255.252.0
+ network-object 10.161.188.0 255.255.252.0
+ network-object 10.161.192.0 255.255.252.0
+ network-object 10.161.196.0 255.255.252.0
+ network-object 10.161.200.0 255.255.252.0
+ network-object 10.161.212.0 255.255.252.0
+ network-object 10.161.216.0 255.255.252.0
+ network-object 10.161.220.0 255.255.252.0
+ network-object 10.161.224.0 255.255.252.0
+ network-object 10.161.232.0 255.255.252.0
+ network-object 10.161.236.0 255.255.252.0
+ network-object 10.161.240.0 255.255.252.0
+ network-object 10.161.244.0 255.255.252.0
+ network-object 10.161.248.0 255.255.252.0
+ network-object 10.161.252.0 255.255.252.0
+ network-object 10.163.0.0 255.255.0.0
+ network-object 10.100.0.0 255.255.0.0
+ network-object 10.101.0.0 255.255.0.0
+ network-object 10.104.0.0 255.255.0.0
+ network-object 10.160.0.0 255.255.0.0
+ network-object 10.82.0.0 255.255.0.0
+ network-object 10.83.0.0 255.255.0.0
+ network-object 10.181.0.0 255.255.0.0
+ network-object 10.244.0.0 255.255.0.0
+ network-object 10.249.0.0 255.255.0.0
+ network-object 10.250.0.0 255.255.0.0
+ network-object 10.252.0.0 255.255.0.0
+ network-object 10.254.0.0 255.255.0.0
+ network-object 10.162.0.0 255.255.0.0
+ network-object 10.255.0.0 255.255.0.0
+ network-object 10.130.0.0 255.255.0.0
+ network-object 149.249.0.0 255.255.0.0
+ network-object 10.161.34.0 255.255.255.0
+ network-object 10.161.35.0 255.255.255.0
+ network-object 10.161.36.0 255.255.252.0
+ network-object 10.161.108.0 255.255.252.0
+ network-object 10.161.112.0 255.255.252.0
+object-group network T-WAN_SPOKE_SP-CN-SH_30
+ network-object 10.161.34.0 255.255.255.0
+ network-object 10.161.35.0 255.255.255.0
+ network-object 10.161.36.0 255.255.252.0
+ network-object 10.161.108.0 255.255.252.0
+ network-object 10.161.112.0 255.255.252.0
+object-group network DM_INLINE_NETWORK_1
+ group-object T-WAN_HUB_SP-ID-JA_30
+ group-object T-WAN_SPOKE_SP-ID-JA_30
+object-group network DM_INLINE_NETWORK_2
+ group-object T-WAN_HUB_SP-ID-JA_30
+ group-object T-WAN_SPOKE_SP-CN-SH_30
+object-group network DM_INLINE_NETWORK_3
+ group-object T-WAN_HUB_SP-ID-JA_30
+ group-object T-WAN_SPOKE_SP-CN-SH_30
+ group-object T-WAN_SPOKE_SP-ID-JA_30
+ network-object object VPN_Pool
+object-group service DM_INLINE_TCP_1 tcp
+ port-object eq www
+ port-object eq https
+ port-object eq 3033
+object-group network DM_INLINE_NETWORK_4
+ group-object T-WAN_HUB_SP-ID-JA_30
+ group-object T-WAN_SPOKE_SP-CN-SH_30
+ group-object T-WAN_SPOKE_SP-ID-JA_30
+ network-object object VPN_Pool
+object-group network DM_INLINE_NETWORK_5
+ network-object 10.0.0.0 255.0.0.0
+ network-object 149.249.0.0 255.255.0.0
+object-group network DM_INLINE_NETWORK_6
+ network-object 10.0.0.0 255.0.0.0
+ network-object 149.249.0.0 255.255.0.0
+object-group protocol TCPUDP
+ protocol-object udp
+ protocol-object tcp
+object-group service DM_INLINE_TCP_3 tcp
+ port-object eq ftp
+ port-object eq ftp-data
+object-group network APAC_HUB_SP_ID-JA_10
+ network-object 10.161.228.0 255.255.252.0
+ network-object 10.161.80.0 255.255.252.0
+object-group network APAC_SPOKE_SP-ID-JA_10
+ network-object 10.161.204.0 255.255.252.0
+ network-object 10.161.208.0 255.255.252.0
+object-group network DM_INLINE_NETWORK_7
+ group-object APAC_HUB_SP_ID-JA_10
+ group-object APAC_SPOKE_SP-ID-JA_10
+object-group network DM_INLINE_NETWORK_8
+ group-object APAC_HUB_SP_ID-JA_10
+ group-object APAC_SPOKE_SP-ID-JA_10
+object-group service DM_INLINE_TCP_2 tcp
+ port-object eq pop3
+ port-object eq smtp
+ port-object eq 49000
+ port-object eq 7076
+ port-object eq 26
+object-group service DM_INLINE_TCP_4 tcp
+ port-object eq pop3
+ port-object eq smtp
+object-group network DM_INLINE_NETWORK_9
+ network-object object Archetype-Nav-Server
+ network-object object Archetype_Nav_help_server
+object-group network DM_INLINE_NETWORK_10
+ network-object 10.161.208.0 255.255.252.0
+ group-object APAC_SPOKE_SP-ID-JA_10
+object-group network DM_INLINE_NETWORK_11
+ network-object object FileShare
+ network-object object Sangfor
+object-group network DM_INLINE_NETWORK_12
+ network-object object FileShare
+ network-object object Sangfor
+object-group service DM_INLINE_TCP_5 tcp
+ port-object eq www
+ port-object eq https
+ port-object eq smtp
+object-group service DM_INLINE_SERVICE_2
+ service-object ip
+ service-object tcp-udp destination eq 9443
+object-group service DM_INLINE_TCP_6 tcp
+ port-object eq www
+ port-object eq https
+ port-object eq smtp
+object-group service DM_INLINE_SERVICE_3
+ service-object tcp-udp destination eq 3101
+ service-object tcp-udp destination eq 8080
+ service-object tcp-udp destination eq 8443
+ service-object tcp-udp destination eq domain
+ service-object tcp destination eq 3389
+ service-object tcp destination eq 3443
+ service-object tcp destination eq 4434
+ service-object tcp destination eq 4443
+ service-object tcp destination eq 7778
+ service-object tcp destination eq 81
+ service-object tcp destination eq 8443
+ service-object tcp destination eq 889
+ service-object tcp destination eq 9091
+ service-object tcp destination eq 993
+ service-object tcp destination eq ftp
+ service-object tcp destination eq ftp-data
+ service-object tcp destination eq www
+ service-object tcp destination eq https
+ service-object tcp destination eq ssh
+ service-object udp destination eq ntp
+object-group service DM_INLINE_TCP_7 tcp
+ port-object eq 3389
+ port-object eq 445
+ port-object eq netbios-ssn
+access-list Biznet-Outside_access_in remark default rule for APAC networks
+access-list Biznet-Outside_access_in extended permit ip object-group APAC_HUB_SP_ID-JA_10 object-group DM_INLINE_NETWORK_10
+access-list Biznet-Outside_access_in remark default T-WAN rule created by mwojcik 01-10-2014
+access-list Biznet-Outside_access_in remark default T-WAN rule created by mwojcik 01-10-2014
+access-list Biznet-Outside_access_in remark default T-WAN rule created by mwojcik 01-10-2014
+access-list Biznet-Outside_access_in remark default T-WAN rule created by mwojcik 01-10-2014
+access-list Biznet-Outside_access_in remark default T-WAN rule created by mwojcik 01-10-2014
+access-list Biznet-Outside_access_in remark default T-WAN rule created by mwojcik 01-10-2014
+access-list Biznet-Outside_access_in remark default T-WAN rule created by mwojcik 01-10-2014
+access-list Biznet-Outside_access_in remark default T-WAN rule created by mwojcik 01-10-2014
+access-list Biznet-Outside_access_in extended permit ip object-group DM_INLINE_NETWORK_1 object-group T-WAN_SPOKE_SP-ID-JA_30
+access-list Biznet-Outside_access_in extended permit ip object VPN_Pool object-group DM_INLINE_NETWORK_5
+access-list Biznet-Outside_access_in extended permit icmp any any
+access-list Biznet-Outside_access_in extended permit tcp any object FTP eq ftp log critical inactive
+access-list Biznet-Outside_access_in extended permit tcp any object FileShare object-group DM_INLINE_TCP_1
+access-list Biznet-Outside_access_in extended permit object-group TCPUDP any object Imigration eq 9443
+access-list Biznet-Outside_access_in remark smtp archetype
+access-list Biznet-Outside_access_in extended permit tcp any object mail.archetype-group.com object-group DM_INLINE_TCP_4
+access-list Biznet-Outside_access_in extended permit ip 10.161.210.0 255.255.255.0 any
+access-list Biznet-Outside_access_in remark wannacry block
+access-list Biznet-Outside_access_in extended deny tcp any any object-group DM_INLINE_TCP_7
+access-list Biznet-Outside_access_in remark default rule to catch all other connection attempts by mwojcik on 01-10-2014
+access-list Biznet-Outside_access_in extended deny ip any any log critical
+access-list Internal-Inside_access_in remark default rule for APAC networks
+access-list Internal-Inside_access_in remark default rule for APAC networks
+access-list Internal-Inside_access_in extended permit ip object-group APAC_SPOKE_SP-ID-JA_10 object-group APAC_HUB_SP_ID-JA_10
+access-list Internal-Inside_access_in remark default T-WAN rule  by mwojcik on 01-10-2014
+access-list Internal-Inside_access_in remark default T-WAN rule  by mwojcik on 01-10-2014
+access-list Internal-Inside_access_in remark default T-WAN rule  by mwojcik on 01-10-2014
+access-list Internal-Inside_access_in remark default T-WAN rule  by mwojcik on 01-10-2014
+access-list Internal-Inside_access_in extended permit ip object-group T-WAN_SPOKE_SP-ID-JA_30 object-group T-WAN_HUB_SP-ID-JA_30
+access-list Internal-Inside_access_in remark default T-WAN rule  by mwojcik on 01-10-2014
+access-list Internal-Inside_access_in remark default T-WAN rule  by mwojcik on 01-10-2014
+access-list Internal-Inside_access_in extended permit ip object-group DM_INLINE_NETWORK_6 object VPN_Pool log critical
+access-list Internal-Inside_access_in extended deny ip any object obj-facebook.com log debugging time-range Working_Hours inactive
+access-list Internal-Inside_access_in extended permit tcp 10.161.209.0 255.255.255.0 object FileShare object-group DM_INLINE_TCP_6
+access-list Internal-Inside_access_in extended permit tcp object FileShare any object-group DM_INLINE_TCP_5
+access-list Internal-Inside_access_in extended permit tcp object FTP any object-group DM_INLINE_TCP_3 log debugging inactive
+access-list Internal-Inside_access_in extended permit icmp any any
+access-list Internal-Inside_access_in extended permit object-group DM_INLINE_SERVICE_1 any any
+access-list Internal-Inside_access_in remark Archetype Port
+access-list Internal-Inside_access_in remark Archetype Port
+access-list Internal-Inside_access_in remark Archetype Port
+access-list Internal-Inside_access_in remark Archetype Port
+access-list Internal-Inside_access_in remark Archetype Port
+access-list Internal-Inside_access_in remark Archetype Port
+access-list Internal-Inside_access_in extended permit tcp any any object-group DM_INLINE_TCP_2 log disable
+access-list Internal-Inside_access_in extended permit ip any object-group DM_INLINE_NETWORK_9
+access-list Internal-Inside_access_in extended permit object-group DM_INLINE_SERVICE_2 any object Imigration
+access-list Internal-Inside_access_in remark default rule to catch all other connection attempts by mwojcik on 01-10-2014
+access-list Internal-Inside_access_in extended deny ip any any log critical
+access-list Biznet-Outside_cryptomap_1 extended permit ip object-group T-WAN_SPOKE_SP-ID-JA_30 object-group T-WAN_HUB_SP-ID-JA_30
+access-list split_networks standard permit 10.0.0.0 255.0.0.0
+access-list split_networks standard permit 10.161.208.0 255.255.252.0
+access-list Internal-Inside_mpc_1 extended permit object-group TCPUDP object Local_block_list any eq www inactive
+access-list Biznet-Outside_cryptomap extended permit ip object-group APAC_SPOKE_SP-ID-JA_10 object-group APAC_HUB_SP_ID-JA_10
+access-list AnyConnect_Client_Local_Print remark IPP: Internet Printing Protocol
+access-list AnyConnect_Client_Local_Print extended permit tcp any4 any4 eq 631
+access-list AnyConnect_Client_Local_Print remark Windows' printing port
+access-list AnyConnect_Client_Local_Print extended permit tcp any4 any4 eq 9100
+access-list AnyConnect_Client_Local_Print remark mDNS: multicast DNS protocol
+access-list AnyConnect_Client_Local_Print extended permit udp any4 host 224.0.0.251 eq 5353
+access-list AnyConnect_Client_Local_Print remark LLMNR: Link Local Multicast Name Resolution protocol
+access-list AnyConnect_Client_Local_Print extended permit udp any4 host 224.0.0.252 eq 5355
+access-list AnyConnect_Client_Local_Print remark TCP/NetBIOS protocol
+access-list AnyConnect_Client_Local_Print extended permit tcp any4 any4 eq 137
+access-list Inside-Archetype_access_in extended permit object-group DM_INLINE_SERVICE_3 any any
+access-list Inside-Archetype_access_in remark copy by SRA, default rule to catch all other connection attempts by mwojcik on 01-10-2014
+access-list Inside-Archetype_access_in extended deny ip any any log critical
+pager lines 24
+logging enable
+logging list vpndebug level debugging class vpn
+logging asdm debugging
+flow-export destination Internal-Inside 10.161.209.21 9996
+flow-export delay flow-create 15
+mtu Biznet-Outside 1500
+mtu Internal-Inside 1500
+mtu Inside-Archetype 1500
+mtu management 1500
+icmp unreachable rate-limit 1 burst-size 1
+icmp permit any Biznet-Outside
+icmp permit 10.161.0.0 255.255.0.0 Biznet-Outside
+icmp permit 10.163.0.0 255.255.0.0 Biznet-Outside
+icmp permit any Internal-Inside
+asdm image disk0:/asdm-752-153.bin
+no asdm history enable
+arp timeout 14400
+no arp permit-nonconnected
+nat (any,any) source static DM_INLINE_NETWORK_7 DM_INLINE_NETWORK_7 destination static DM_INLINE_NETWORK_8 DM_INLINE_NETWORK_8 no-proxy-arp
+nat (any,any) source static DM_INLINE_NETWORK_4 DM_INLINE_NETWORK_4 destination static DM_INLINE_NETWORK_3 DM_INLINE_NETWORK_3 no-proxy-arp description Disable NAT for internal traffic
+nat (Internal-Inside,Biznet-Outside) source dynamic any 182.253.7.101
+nat (Inside-Archetype,Biznet-Outside) source dynamic any 182.253.7.101
+nat (Inside-Archetype,Biznet-Outside) source static any any destination static NETWORK_OBJ_10.161.208.0_24 NETWORK_OBJ_10.161.208.0_24 no-proxy-arp route-lookup
+!
+object network FileShare
+ nat (Internal-Inside,Biznet-Outside) static 182.253.7.102 service tcp https https
+object network FTP
+ nat (Internal-Inside,Biznet-Outside) static 182.253.7.102 service tcp ftp ftp
+object network Sangfor
+ nat (any,any) static 182.253.7.101
+access-group Biznet-Outside_access_in in interface Biznet-Outside
+access-group Internal-Inside_access_in in interface Internal-Inside
+access-group Inside-Archetype_access_in in interface Inside-Archetype
+route Biznet-Outside 0.0.0.0 0.0.0.0 182.253.7.97 1
+timeout xlate 3:00:00
+timeout pat-xlate 0:00:30
+timeout conn 1:00:00 half-closed 0:10:00 udp 0:02:00 sctp 0:02:00 icmp 0:00:02
+timeout sunrpc 0:10:00 h323 0:05:00 h225 1:00:00 mgcp 0:05:00 mgcp-pat 0:05:00
+timeout sip 0:30:00 sip_media 0:02:00 sip-invite 0:03:00 sip-disconnect 0:02:00
+timeout sip-provisional-media 0:02:00 uauth 0:05:00 absolute
+timeout tcp-proxy-reassembly 0:01:00
+timeout floating-conn 0:00:00
+aaa-server CORP1_LDAP protocol ldap
+aaa-server CORP1_LDAP (Internal-Inside) host 10.161.209.9
+ server-port 636
+ ldap-base-dn OU=AU_Tebodin,OU=BIT,DC=corp1,DC=ad-is,DC=net
+ ldap-scope subtree
+ ldap-naming-attribute sAMAccountName
+ ldap-login-password *****
+ ldap-login-dn CN=teb_svc_ID01_ASA,OU=Services,OU=AU_TebID01,OU=AU_Tebodin,OU=BIT,DC=corp1,DC=ad-is,DC=net
+ ldap-over-ssl enable
+ server-type microsoft
+aaa-server APAC_LDAP protocol ldap
+aaa-server APAC_LDAP (Internal-Inside) host 10.161.209.15
+ ldap-base-dn OU=Archetype,DC=apac,DC=local
+ ldap-scope subtree
+ ldap-naming-attribute sAMAccountName
+ ldap-login-password *****
+ ldap-login-dn CN=teb_svc_ID01_ASA,OU=Services,OU=ACT_ID01,OU=Archetype,DC=apac,DC=local
+ server-type microsoft
+aaa-server APAC_LDAP (Internal-Inside) host 10.161.80.6
+ ldap-base-dn OU=Archetype,DC=apac,DC=local
+ ldap-scope subtree
+ ldap-naming-attribute sAMAccountName
+ ldap-login-password *****
+ ldap-login-dn CN=teb_svc_VN01_ASA,OU=Services,OU=ACT_VN01,OU=Archetype,DC=apac,DC=local
+ server-type microsoft
+no user-identity enable
+user-identity default-domain LOCAL
+aaa authentication enable console LOCAL
+aaa authentication http console LOCAL
+aaa authentication ssh console LOCAL
+aaa authorization command LOCAL
+http server enable 4434
+http 10.161.209.0 255.255.255.0 Internal-Inside
+http 192.168.1.0 255.255.255.0 management
+http 10.161.0.0 255.255.0.0 Internal-Inside
+http 89.76.40.91 255.255.255.255 Biznet-Outside
+http 10.163.0.0 255.255.0.0 Internal-Inside
+http 85.204.63.130 255.255.255.255 Biznet-Outside
+http 94.75.116.172 255.255.255.255 Biznet-Outside
+snmp-server host Biznet-Outside 10.163.8.53 community *****
+snmp-server host Internal-Inside 10.163.8.53 community *****
+snmp-server location IDJKT
+no snmp-server contact
+
+
+ssh stricthostkeycheck
+ssh 89.76.40.91 255.255.255.255 Biznet-Outside
+ssh 94.75.116.172 255.255.255.255 Biznet-Outside
+ssh 10.161.0.0 255.255.0.0 Internal-Inside
+ssh timeout 5
+ssh key-exchange group dh-group1-sha1
+console timeout 0
+management-access Internal-Inside
+dhcpd address 10.161.209.85-10.161.209.235 Internal-Inside
+dhcpd dns 10.161.209.15 10.161.34.9 interface Internal-Inside
+dhcpd lease 10080 interface Internal-Inside
+dhcpd domain APAC.LOCAL interface Internal-Inside
+dhcpd enable Internal-Inside
+!
+dhcpd address 10.161.210.35-10.161.210.235 Inside-Archetype
+dhcpd dns 10.161.209.15 8.8.8.8 interface Inside-Archetype
+dhcpd lease 10080 interface Inside-Archetype
+dhcpd domain apac.local interface Inside-Archetype
+dhcpd enable Inside-Archetype
+!
+dhcpd address 192.168.1.2-192.168.1.254 management
+dhcpd enable management
+!
+threat-detection basic-threat
+threat-detection statistics host
+threat-detection statistics port
+threat-detection statistics protocol
+threat-detection statistics access-list
+no threat-detection statistics tcp-intercept
+ssl trust-point ASDM_TrustPoint0 Internal-Inside
+webvpn
+ enable Biznet-Outside
+ anyconnect image disk0:/anyconnect-win-4.1.04011-k9.pkg 1 regex "Windows NT"
+ anyconnect image disk0:/anyconnect-win-3.1.06073-k9.pkg 2 regex "Windows NT"
+ anyconnect profiles APACUserVPN disk0:/apacuservpn.xml
+ anyconnect profiles TebodinUserVPN disk0:/tebodinuservpn.xml
+ anyconnect enable
+ tunnel-group-list enable
+ keepout "Please use Cisco AnyConnect software. If you have any questions please contact ICT Department."
+ cache
+  disable
+ error-recovery disable
+group-policy DfltGrpPolicy attributes
+ dns-server value 10.161.209.15
+ default-domain value apac.local
+group-policy GroupPolicy_UserVPN internal
+group-policy GroupPolicy_UserVPN attributes
+ dns-server value 10.161.209.9 10.163.8.90
+ vpn-tunnel-protocol ssl-client
+ password-storage disable
+ split-tunnel-policy tunnelspecified
+ split-tunnel-network-list value split_networks
+ default-domain value corp1.ad-is.net
+ address-pools value vpn_address_pool
+ webvpn
+  anyconnect dpd-interval client 30
+  anyconnect profiles value TebodinUserVPN type user
+group-policy GroupPolicy_APAC_VPN internal
+group-policy GroupPolicy_APAC_VPN attributes
+ dns-server value 10.161.209.15
+ vpn-tunnel-protocol ssl-client
+ password-storage disable
+ split-tunnel-policy tunnelspecified
+ split-tunnel-network-list value split_networks
+ default-domain value apac.local
+ split-tunnel-all-dns disable
+ address-pools value vpn_address_pool
+ webvpn
+  anyconnect modules value vpngina
+  anyconnect profiles value APACUserVPN type user
+group-policy GroupPolicy_APAC internal
+group-policy GroupPolicy_APAC attributes
+ wins-server none
+ dns-server value 8.8.8.8 10.161.209.9
+ vpn-tunnel-protocol ssl-client
+ default-domain value apac.local
+group-policy GroupPolicy1 internal
+group-policy GroupPolicy1 attributes
+ vpn-tunnel-protocol ikev1
+dynamic-access-policy-record DfltAccessPolicy
+username srahman password qTcDmWTtjgB9aPId encrypted privilege 15
+username cnicolae password KurDKGngzs9U60uj encrypted privilege 15
+tunnel-group DefaultWEBVPNGroup general-attributes
+ address-pool vpn_address_pool
+ authentication-server-group APAC_LDAP
+tunnel-group 116.246.38.26 type ipsec-l2l
+tunnel-group 116.246.38.26 general-attributes
+ default-group-policy GroupPolicy1
+tunnel-group 116.246.38.26 ipsec-attributes
+ ikev1 pre-shared-key *****
+tunnel-group 37.17.209.81 type ipsec-l2l
+tunnel-group 37.17.209.81 general-attributes
+ default-group-policy GroupPolicy1
+tunnel-group 37.17.209.81 ipsec-attributes
+ ikev1 pre-shared-key *****
+tunnel-group Tebodin_ID_Users type remote-access
+tunnel-group Tebodin_ID_Users general-attributes
+ address-pool vpn_address_pool
+ authentication-server-group CORP1_LDAP
+ authentication-server-group (Internal-Inside) LOCAL
+ default-group-policy GroupPolicy_UserVPN
+tunnel-group Tebodin_ID_Users webvpn-attributes
+ authentication aaa certificate
+ group-alias 1.Tebodin_Certificate_User enable
+tunnel-group 101.251.127.162 type ipsec-l2l
+tunnel-group 101.251.127.162 general-attributes
+ default-group-policy GroupPolicy1
+tunnel-group 101.251.127.162 ipsec-attributes
+ ikev1 pre-shared-key *****
+tunnel-group 101.53.11.100 type ipsec-l2l
+tunnel-group 101.53.11.100 general-attributes
+ default-group-policy GroupPolicy1
+tunnel-group 101.53.11.100 ipsec-attributes
+ ikev1 pre-shared-key *****
+tunnel-group APAC_ID_Users type remote-access
+tunnel-group APAC_ID_Users general-attributes
+ address-pool vpn_address_pool
+ authentication-server-group APAC_LDAP
+ authentication-server-group (Internal-Inside) LOCAL
+ default-group-policy GroupPolicy_APAC_VPN
+tunnel-group APAC_ID_Users webvpn-attributes
+ group-alias 2.APAC_Users enable
+tunnel-group APAC type remote-access
+tunnel-group APAC general-attributes
+ address-pool vpn_address_pool
+ default-group-policy GroupPolicy_APAC
+tunnel-group APAC webvpn-attributes
+ group-alias APAC enable
+!
+class-map type regex match-any DomainBlockList
+ match regex facebook.com
+ match regex nontonmovie.com
+ match regex youtube.com
+class-map type inspect http match-all BlockDomainClass
+ match request header host regex class DomainBlockList
+class-map inspection_default
+ match default-inspection-traffic
+!
+!
+policy-map type inspect dns preset_dns_map
+ parameters
+  message-length maximum client auto
+  message-length maximum 512
+policy-map type inspect http http_inspection_policy
+ parameters
+  protocol-violation action log
+policy-map global_policy
+ class inspection_default
+  inspect dns preset_dns_map
+  inspect ftp
+  inspect h323 h225
+  inspect h323 ras
+  inspect rsh
+  inspect rtsp
+  inspect esmtp
+  inspect sqlnet
+  inspect skinny
+  inspect sunrpc
+  inspect xdmcp
+  inspect sip
+  inspect netbios
+  inspect tftp
+  inspect ip-options
+ class class-default
+  user-statistics accounting
+!
+service-policy global_policy global
+privilege cmd level 3 mode exec command perfmon
+privilege cmd level 5 mode exec command dir
+privilege cmd level 3 mode exec command ping
+privilege cmd level 3 mode exec command who
+privilege cmd level 3 mode exec command logging
+privilege cmd level 3 mode exec command failover
+privilege cmd level 3 mode exec command vpn-sessiondb
+privilege cmd level 3 mode exec command packet-tracer
+privilege cmd level 5 mode exec command export
+privilege show level 5 mode exec command import
+privilege show level 5 mode exec command running-config
+privilege show level 3 mode exec command reload
+privilege show level 3 mode exec command mode
+privilege show level 3 mode exec command firewall
+privilege show level 3 mode exec command asp
+privilege show level 3 mode exec command cpu
+privilege show level 3 mode exec command interface
+privilege show level 3 mode exec command clock
+privilege show level 3 mode exec command dns-hosts
+privilege show level 3 mode exec command access-list
+privilege show level 3 mode exec command logging
+privilege show level 3 mode exec command vlan
+privilege show level 3 mode exec command ip
+privilege show level 3 mode exec command failover
+privilege show level 3 mode exec command asdm
+privilege show level 3 mode exec command arp
+privilege show level 3 mode exec command ipv6
+privilege show level 3 mode exec command route
+privilege show level 3 mode exec command aaa-server
+privilege show level 3 mode exec command aaa
+privilege show level 3 mode exec command crypto
+privilege show level 3 mode exec command ssh
+privilege show level 3 mode exec command vpn-sessiondb
+privilege show level 3 mode exec command vpn
+privilege show level 3 mode exec command dhcpd
+privilege show level 3 mode exec command blocks
+privilege show level 3 mode exec command wccp
+privilege show level 3 mode exec command dynamic-filter
+privilege show level 3 mode exec command webvpn
+privilege show level 3 mode exec command service-policy
+privilege show level 3 mode exec command module
+privilege show level 3 mode exec command uauth
+privilege show level 3 mode exec command compression
+privilege show level 3 mode exec command ospf
+privilege show level 3 mode exec command eigrp
+privilege show level 3 mode configure command interface
+privilege show level 3 mode configure command clock
+privilege show level 3 mode configure command access-list
+privilege show level 3 mode configure command logging
+privilege show level 3 mode configure command ip
+privilege show level 3 mode configure command failover
+privilege show level 5 mode configure command asdm
+privilege show level 3 mode configure command arp
+privilege show level 3 mode configure command route
+privilege show level 3 mode configure command aaa-server
+privilege show level 3 mode configure command aaa
+privilege show level 3 mode configure command crypto
+privilege show level 3 mode configure command ssh
+privilege show level 3 mode configure command dhcpd
+privilege show level 5 mode configure command privilege
+privilege clear level 3 mode exec command crypto
+privilege clear level 3 mode exec command dns-hosts
+privilege clear level 3 mode exec command logging
+privilege clear level 3 mode exec command arp
+privilege clear level 3 mode exec command aaa-server
+privilege clear level 3 mode exec command dynamic-filter
+privilege cmd level 3 mode configure command failover
+privilege clear level 3 mode configure command logging
+privilege clear level 3 mode configure command crypto
+privilege clear level 3 mode configure command arp
+privilege clear level 3 mode configure command aaa-server
+prompt hostname context
+no call-home reporting anonymous
+Cryptochecksum:b4dc958a3154650e45f10b67b01dda98
+: end

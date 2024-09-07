@@ -1,0 +1,35 @@
+Switch 2960xxXXXxx
+
+hostname xxTrialxx
+
+enable secret 5 passwordzzzpassword
+
+clock timezone UTC 7
+
+interface FastEthernet0
+ no ip address
+
+interface GigabitEthernet1/0/13
+ switchport mode access
+ switchport port-security
+ switchport port-security aging time 2
+ switchport port-security violation restrict
+ switchport port-security aging type inactivity
+ macro description cisco-desktop
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+
+interface Vlan1
+ ip address 10.171.209.251 255.255.255.0
+
+ip default-gateway 10.161.209.254
+ip http server
+ip http authentication local
+ip http secure-server
+
+line con 0
+line vty 0 4
+ password 
+ login
+line vty 5 15
+ password
